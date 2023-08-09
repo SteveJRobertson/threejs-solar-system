@@ -35,10 +35,3 @@ function render() {
 }
 
 render()
-
-const sunLight = new THREE.PointLight(0xffffff, 1)
-sunLight.position.set(0, 0, 0)
-scene.add(sunLight)
-
-const ambientLight = new THREE.AmbientLight(0x404040)
-scene.add(ambientLight)
