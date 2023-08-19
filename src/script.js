@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const SCALE_FACTOR = 2
 const DIAMETER_FACTOR = 1000
@@ -228,7 +229,7 @@ const camera = new THREE.PerspectiveCamera(
   25,
   window.innerWidth / window.innerHeight
 )
-camera.position.set(0, 0, planets.neptune.distanceFromSun * 4)
+camera.position.set(52, -378, planets.neptune.distanceFromSun * 4)
 camera.lookAt(0, 0, 0)
 
 scene.add(camera)
@@ -241,13 +242,15 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+// Controls
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
 // Animate
 const clock = new THREE.Clock()
 
 function tick() {
   const elapsedTime = clock.getElapsedTime()
-
-  console.log(elapsedTime)
 
   // Update the planets' orbits
   const mercuryPosition = mercuryOrbit.getPointAt(
@@ -290,6 +293,10 @@ function tick() {
   saturn.position.set(saturnPosition.x, saturnPosition.y, saturnPosition.z)
   uranus.position.set(uranusPosition.x, uranusPosition.y, uranusPosition.z)
   neptune.position.set(neptunePosition.x, neptunePosition.y, neptunePosition.z)
+
+  controls.update()
+
+  // console.log(camera.position)
 
   renderer.render(scene, camera)
 
